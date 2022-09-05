@@ -25,3 +25,23 @@
   tags:
     - users
 
+- name: Enable automatic login
+  become: true
+  ansible.builtin.replace:
+    path: /etc/gdm3/custom.conf
+    after: '# Enabling automatic login'
+    regexp: '^#  AutomaticLoginEnable = true'
+    replace: 'AutomaticLoginEnable = true'
+  tags:
+    - users
+
+- name: Enable automatic login for `{{ student.user }}`
+  become: true
+  ansible.builtin.replace:
+    path: /etc/gdm3/custom.conf
+    after: 'AutomaticLoginEnable = true'
+    regexp: '^#  AutomaticLogin = user1'
+    replace: "AutomaticLogin = {{ student.user }}"
+  tags:
+    - users
+
