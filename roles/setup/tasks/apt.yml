@@ -47,6 +47,31 @@
   tags:
     - apt
 
+- name: "Read Checksum"
+  shell: curl https://getcomposer.org/download/latest-stable/composer.phar.sha256
+  register: composer_checksum
+  changed_when: false
+  tags:
+    - apt
+
+- name: "Download PHAR file"
+  become: true
+  ansible.builtin.get_url:
+    url: https://getcomposer.org/download/latest-stable/composer.phar
+    dest: /usr/local/bin/composer
+    force: yes
+    checksum: "sha256:{{ composer_checksum.stdout }}"
+    mode: '0755'
+  tags:
+    - apt
+
+- name: "Read composer version"
+  shell: composer -V
+  register: composer_version
+  changed_when: false
+  tags:
+    - apt
+    - apt.test
 
 - debug:
     var: composer_version.stdout
