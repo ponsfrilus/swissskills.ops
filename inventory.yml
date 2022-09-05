@@ -1,0 +1,15 @@
+all:
+  hosts:
+    ICTIT17:
+      ansible_host: 127.0.0.1
+      ansible_port: 3022
+      ansible_user: administrator
+      ansible_password: administrator
+      ansible_become_pass: administrator
+    local:
+      ansible_host: 127.0.0.1
+      ansible_user: administrator
+      ansible_password: administrator
+      ansible_become_pass: administrator
+      ansible_connection: local
+      ansible_python_interpreter: "{{ xaasible_dir }}/ansible-deps-cache/bin/python3-shim"
