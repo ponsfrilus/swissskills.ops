@@ -45,3 +45,13 @@
   tags:
     - users
 
+# https://askubuntu.com/a/545764/214944
+- name: Hide `administrator` from the login screen
+  become: true
+  copy:
+    dest: "/var/lib/AccountsService/users/administrator"
+    content: |
+      [User]
+      SystemAccount=true
+  tags:
+    - users
