@@ -21,6 +21,11 @@
     - skills17
     - skills17.test
 
+- include_tasks: desktop-shortcuts.yml
+  tags:
+    - custom
+    - custom.test
+
 - include_tasks: apache.yml
   tags:
     - apache

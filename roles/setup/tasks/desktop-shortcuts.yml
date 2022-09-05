@@ -1,0 +1,43 @@
+# https://github.com/twitter/twemoji.git
+- name: Clone twemoji to /usr/local/share/twemoji # yes, this is totally over kill 🤭
+  become: true
+  ansible.builtin.git:
+    repo: https://github.com/twitter/twemoji.git
+    dest: "/usr/local/share/twemoji"
+    update: no
+  tags:
+    - custom
+
+- name: Set perms on `/usr/local/share/twemoji`
+  become: true
+  file:
+    path: /usr/local/share/twemoji
+    state: directory
+    mode: '0755'
+    recurse: yes
+  tags:
+    - custom
+
+# https://askubuntu.com/a/1391903/214944
+- name: Add a desktop launcher
+  become: true
+  copy:
+    dest: "{{ student_home }}/Desktop/test.desktop"
+    content: |
+      [Desktop Entry]
+      Type=Application
+      Exec=chromium-browser https://google.com
+      Name=Go to google
+      Icon=/usr/local/share/twemoji/assets/svg/1f984.svg
+  tags:
+    - custom
+
+# we want to run `gio set /home/student/Desktop/test.desktop metadata::trusted true`
+# https://stackoverflow.com/questions/51747456/is-it-possible-to-modify-gnome-desktop-file-metadata-from-non-gui-session-using
+# but that's not how it works with Wayland
+- name: Make {{ student_home }}/Desktop/test.desktop Launcher Trusted
+  become: true
+  shell: "dbus-launch gio set {{ student_home }}/Desktop/test.desktop metadata::trusted true"
+  # shell: "gio set {{ student_home }}/Desktop/test.desktop metadata::trusted true"
+  tags:
+    - custom
