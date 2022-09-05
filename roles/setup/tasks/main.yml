@@ -16,3 +16,8 @@
     - users
     - users.test
 
+- include_tasks: skills17.yml
+  tags:
+    - skills17
+    - skills17.test
+

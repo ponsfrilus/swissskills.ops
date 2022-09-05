@@ -1,0 +1,46 @@
+# Download ictskills-preparation-tasks-20224.zip from ict-formationprofessionnelle.ch
+
+- name: Create the Trade17 directory
+  become: true
+  ansible.builtin.file:
+    path: "{{ student_home }}/Documents/Trade17/"
+    state: directory
+    owner: "{{ student.user }}"
+    group: "{{ student.user }}"
+  tags:
+    - skills17
+
+- name: Check if Trade17 files are already there
+  become: true
+  ansible.builtin.stat:
+    path: "{{ student_home }}/Documents/Trade17/speedchallenge/readme/css/bootstrap.css"
+  register: _skills_file_check
+  tags:
+    - skills17
+    - skills17.test
+
+- debug:
+    msg: "{{ _skills_file_check }}"
+  tags: test
+  when: |
+    "skills17.test" in ansible_run_tags
+
+- name: Unarchive and download the Swiss skills archive
+  become: true
+  ansible.builtin.unarchive:
+    src: https://www.ict-berufsbildung.ch/resources/ictskills-preparation-tasks-20224.zip
+    dest: "{{ student_home }}/Documents/Trade17/"
+    remote_src: yes
+    owner: "{{ student.user }}"
+    group: "{{ student.user }}"
+  when: _skills_file_check.stat.exists is false
+  tags:
+    - skills17
+
+- name: Remove Apple's slug track 😐
+  become: true
+  ansible.builtin.file:
+    path: "{{ student_home }}/Documents/Trade17/__MACOSX"
+    state: absent
+  tags:
+    - skills17
