@@ -47,6 +47,13 @@
   tags:
     - apt
 
+- name: Install a list of .deb package from the internet
+  become: true
+  ansible.builtin.apt:
+    deb: https://github.com/atom/atom/releases/latest/download/atom-amd64.deb
+  tags:
+    - apt
+
 - name: "Read Checksum"
   shell: curl https://getcomposer.org/download/latest-stable/composer.phar.sha256
   register: composer_checksum
