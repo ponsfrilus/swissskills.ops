@@ -6,3 +6,8 @@
     - hostname
     - hostname.test
 
+- include_tasks: apt.yml
+  tags:
+    - apt
+    - apt.test
+
