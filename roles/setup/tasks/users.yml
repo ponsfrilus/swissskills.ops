@@ -14,3 +14,14 @@
   tags:
     - users
 
+- name: Configure zsh for `{{ student.user }}`
+  become: true
+  ansible.builtin.template:
+    src: zshrc.j2
+    dest: "/home/{{ student.user }}/.zshrc"
+    owner: "{{ student.user }}"
+    group: "{{ student.user }}"
+    mode: '0644'
+  tags:
+    - users
+

@@ -6,3 +6,4 @@ student:
   pass: student
 student_home: "/home/{{ student.user }}"
 shell:
+  HISTSIZE: 9999
