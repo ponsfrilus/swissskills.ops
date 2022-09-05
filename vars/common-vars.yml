@@ -1,4 +1,8 @@
 vm:
   hostname: ICTIT17
 student:
+  hash: student
+  user: student
+  pass: student
+student_home: "/home/{{ student.user }}"
 shell:

@@ -1,0 +1,16 @@
+- debug:
+    msg: "{{ student.user }}"
+  tags:
+    - users
+
+- name: Add the `{{ student.user }}` user
+  become: true
+  ansible.builtin.user:
+    name: "{{ student.user }}"
+    comment: The student account
+    password: "{{ student.pass | password_hash('sha512', student.hash) }}"
+    shell: /bin/zsh
+    state: present
+  tags:
+    - users
+

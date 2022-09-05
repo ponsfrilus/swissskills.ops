@@ -11,3 +11,8 @@
     - apt
     - apt.test
 
+- include_tasks: users.yml
+  tags:
+    - users
+    - users.test
+
