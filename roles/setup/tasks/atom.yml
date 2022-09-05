@@ -1,0 +1,44 @@
+# See https://github.com/gantsign/ansible-role-atom 
+# Looks great but can get it work...
+- name: Install a list of Atom's packages
+  become: true
+  become_user: "{{ student.user }}"
+  ansible.builtin.shell: "[ ! -d {{ student_home }}/.atom/packages/{{ item }} ] && apm install {{ item }} || true"
+  with_items:
+    # apm list --bare --installed with student.user to get a list
+    - atom-autocomplete-php
+    - atom-beautify
+    - atom-ternjs
+    - autoflow2
+    - busy-signal # it's a dependency of another one -- can't remember which one
+    - color-indent
+    - color-picker
+    - duplicate-removal
+    - emmet
+    - file-icons
+    - git-blame
+    - linter
+    - linter-eslint-node
+    - linter-php
+    - md-toc # self promo!
+    - minimap
+    - minimap-pigments
+    - multi-cursor
+    - multi-cursor-plus
+    - pretty-json
+  tags: atom
+
+# https://stackoverflow.com/a/52561841/960623
+- name: Remove Atom Telemetry and Welcome screen
+  become: true
+  become_user: "{{ student.user }}"
+  copy:
+    dest: "{{ student_home }}/.atom/config.cson"
+    content: |
+      "*":
+        core:
+          telemetryConsent: "no"
+        welcome:
+          showOnStartup: false
+  tags:
+    - atom

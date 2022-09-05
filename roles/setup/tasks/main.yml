@@ -26,3 +26,8 @@
     - apache
     - apache.test
 
+- include_tasks: atom.yml
+  tags:
+    - atom
+    - atom.test
+
