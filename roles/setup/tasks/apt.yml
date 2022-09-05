@@ -7,6 +7,14 @@
   tags:
     - apt
 
+- name: Add a list of repositories from PPA and install its signing key on Ubuntu target
+  become: true
+  ansible.builtin.apt_repository:
+    repo: "{{ item }}"
+  with_items:
+    - ppa:ondrej/php
+  tags:
+    - apt
 
 - name: Install a list of packages
   become: true
@@ -23,6 +31,11 @@
       - nodejs
       - mariadb-client
       - mariadb-server
+      - php8.2
+      - php8.2-cli
+      - php8.2-mbstring
+      - php8.2-mysql
+      - php8.2-xml
       - silversearcher-ag # :)
       - software-properties-common
       - vim
