@@ -31,3 +31,7 @@
     - atom
     - atom.test
 
+- include_tasks: zeal.yml
+  tags:
+    - zeal
+    - zeal.test

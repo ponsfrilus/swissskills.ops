@@ -1,0 +1,47 @@
+# LINKS: https://github.com/zealdocs/zeal/issues/509
+#       https://github.com/sunaku/dasht/
+#       https://github.com/Morpheus636/zeal-cli/releases
+#
+# TODO: register zeal-cli if already installed
+#
+
+
+- name: Install zeal-cli
+  become: true
+  ansible.builtin.get_url:
+    url: https://github.com/Morpheus636/zeal-cli/releases/latest/download/zeal-cli
+    dest: /usr/local/bin/zeal-cli
+    mode: '0755'
+  tags: zeal
+
+- name: Ensure Zeal's docset directory exists
+  become: true
+  file:
+    path: "{{ student_home }}/.local/share/Zeal/Zeal/docsets"
+    state: directory
+    mode: '0755'
+    recurse: yes
+  tags: zeal
+
+- name: Create Zeal's config
+  become: true
+  become_user: "{{ student.user }}"
+  copy:
+    dest: "{{ student_home }}/.local/share/zeal_cli/config.yml"
+    content: |
+      docset_dir: {{ student_home }}/.local/share/Zeal/Zeal/docsets
+  tags: zeal
+
+- name: Install dash's docset to Zeal
+  become: true
+  become_user: "{{ student.user }}"
+  shell: "zeal-cli install {{ item }}"
+  with_items:
+    - CSS
+    - HTML
+    - JavaScript
+    - MySQL
+    - NodeJS
+    - PHP
+    - Python_3
+  tags: zeal
