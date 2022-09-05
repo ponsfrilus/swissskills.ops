@@ -1,0 +1,33 @@
+- name: Configure Swiss skills virtual host
+  become: true
+  ansible.builtin.template:
+    src: apache-default.j2
+    dest: /etc/apache2/sites-available/001-skills17.conf
+  tags:
+    - apache
+
+- name: Deactivate the default vhosts
+  file:
+    path: /etc/apache2/site-enabled/000-default.conf
+    state: absent
+  tags:
+    - apache
+
+- name: Activate the Swiss skills vhosts
+  become: true
+  file:
+    src: /etc/apache2/sites-available/001-skills17.conf
+    dest: /etc/apache2/sites-enabled/001-skills17.conf
+    state: link
+  tags:
+    - apache
+
+- name: restart apache2
+  become: true
+  service: 
+    name: apache2
+    state: restarted
+  tags:
+    - apache
+
+## TODO: add https://github.com/Vestride/fancy-index 

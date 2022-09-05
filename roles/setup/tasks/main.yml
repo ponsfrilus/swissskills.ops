@@ -21,3 +21,8 @@
     - skills17
     - skills17.test
 
+- include_tasks: apache.yml
+  tags:
+    - apache
+    - apache.test
+
