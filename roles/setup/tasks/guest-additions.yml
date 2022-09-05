@@ -1,0 +1,7 @@
+# For some yet unkonw reason, the virtualbox-guest-additions-iso package
+# is not enough to activate the auto-resizing of the guest display.
+# The workaround is to do it the traditional way, which is to mount the iso
+# from the VirtualBox menus and then run this script
+# VBox_GAs_6.1.34/VBoxLinuxAdditions.run
+# Thanks to https://askubuntu.com/a/1319443/214944
+(WIP)
