@@ -8,6 +8,33 @@
     - apt
 
 
+- name: Install a list of packages
+  become: true
+  ansible.builtin.apt:
+    pkg: # sorted alphabetically
+      - apache2
+      - chromium-browser # transitional "snap" package
+      - curl
+      - dbus-x11
+      - firefox
+      - git
+      - libapache2-mod-php8.2
+      - nano
+      - nodejs
+      - mariadb-client
+      - mariadb-server
+      - silversearcher-ag # :)
+      - software-properties-common
+      - vim
+      - virtualbox-guest-additions-iso # for shared clipboard and video support (https://www.virtualbox.org/manual/ch04.html)
+      - wget
+      - zeal
+      - zsh
+    state: latest
+  tags:
+    - apt
+
+
 - debug:
     var: composer_version.stdout
   tags:
