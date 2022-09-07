@@ -3,6 +3,7 @@
 - name: Install a list of Atom's packages
   become: true
   become_user: "{{ student.user }}"
+  become_method: enable
   ansible.builtin.shell: "[ ! -d {{ student_home }}/.atom/packages/{{ item }} ] && apm install {{ item }} || true"
   with_items:
     # apm list --bare --installed with student.user to get a list
@@ -32,6 +33,7 @@
 - name: Remove Atom Telemetry and Welcome screen
   become: true
   become_user: "{{ student.user }}"
+  become_method: enable
   copy:
     dest: "{{ student_home }}/.atom/config.cson"
     content: |
