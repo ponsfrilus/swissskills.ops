@@ -30,9 +30,27 @@ ensure_ansible () {
 ensure_ansible
 [ "$1" == "--help" ] && help
 
-DEFAULT_LIMIT="all:!local"
-if [ "$1" == "--local" ]; then
-    DEFAULT_LIMIT="local"
-fi
+inventories () {
+  case "$inventory_mode" in
+    local) echo "-i inventory-local.yml --ask-become-pass" ;;
+    prod)  echo "-i inventory.yml" ;;
+  esac
+}
 
-ansible-playbook -i inventory.yml playbook.yml --limit $DEFAULT_LIMIT "$@"
+declare -a ansible_args
+ansible_args=(-e "skillsible_suitcase_dir=$PWD/ansible-deps-cache")
+inventory_mode="prod"
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --help)
+      help ;;
+    --local)
+      inventory_mode="local"
+      shift ;;
+    *)
+      ansible_args+=("$1")
+      shift ;;
+  esac
+done
+
+ansible-playbook $(inventories) playbook.yml "${ansible_args[@]}"

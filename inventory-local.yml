@@ -1,8 +1,9 @@
 all:
   hosts:
-    ICTIT17:
+    local:
       ansible_host: 127.0.0.1
-      ansible_port: 3022
       ansible_user: administrator
       ansible_password: administrator
       ansible_become_pass: administrator
+      ansible_connection: local
+      ansible_python_interpreter: "{{ skillsible_suitcase_dir }}/bin/python3-shim"
