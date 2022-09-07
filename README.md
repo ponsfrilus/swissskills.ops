@@ -9,14 +9,19 @@ The project uses [Ansible] but you won't need anything but `git` and `curl` to
 begin with. The Ansible script uses a "suitcase" that installs everything you
 need (read more at [ansible.suitcase]).
 
-The official "competitor-vm-ubuntu" is available here: https://github.com/skills17/competitor-vm-ubuntu.
+The official "competitor-vm-ubuntu" creation repo is available here:
+https://github.com/skills17/competitor-vm-ubuntu.
 
 
 ## TL;DR
 
-In order to use the script, you can either
-  a) clone this repository on the VM directly and run `./skillsible --local`, or
-  b) edit the [inventory.yml], install `openssh-server` on the VM and run `./skillsible`.
+In order to use the script, you can either  
+  a) clone this repository on the VM directly and run `./skillsible --local`, or  
+  b) edit the [inventory.yml](./inventory.yml) file, install `curl`, `git` and
+     `openssh-server` on the VM and run `./skillsible` from your machine.
+
+| ⚠️ This is a Work In Progress — be prepared to debug. ⚠️ |
+| :---: |
 
 
 ## Prepare the VM
@@ -30,8 +35,10 @@ To create the VM:
   2. Install [VirtualBox]
   3. Create the new Virtual Machine
   4. Mount the Ubuntu ISO and start on it
-  5. Install Ubuntu the minimal way creating the administrator/administrator user
-  6. Install `sudo apt install git curl openssh-server`
+  5. Install Ubuntu the minimal way creating the `administrator`/`administrator`
+     user. If needed, screenshots documenting this process are available in the
+     [INSTALL.md](./INSTALL.md) file
+  6. Install `sudo apt install git curl openssh-server` in the fresh OS
   7. Setup the port forwarding (3022 → 22) (see [developertharun] documentation)
   8. Choose a) or b) in the TL;DR §
 
